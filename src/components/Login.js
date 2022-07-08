@@ -33,7 +33,7 @@ export default function Login() {
         {error ? (
         <ErrorMessage>
             <h3>Informações Incorretas</h3>
-            <h4>X</h4>
+            <h4 onClick={() => setError(false)}>X</h4>
         </ErrorMessage> ) : "" }
 
         <Link to="/signUp"><Message>Primeira vez? Cadastre-se!</Message></Link> 
@@ -121,6 +121,10 @@ const ErrorMessage = styled.div`
         font-size: 14px; 
         font-weight: 700;  
         color: rgba(255, 255, 255, 1);
+
+        &:hover { 
+            cursor: pointer;
+        }
     } 
 
     h3 { 
