@@ -25,7 +25,7 @@ export default function Login() {
             <button onClick={() => setClicked(true)}>
                 {clicked ? (
                     <ThreeDots color="white" height={80} width={80} /> 
-                ) : ("Entrar") }
+                ) :  ("Entrar") }
             </button>
             </Data> 
         </form> 
