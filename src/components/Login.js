@@ -1,5 +1,5 @@
 import styled from "styled-components"; 
-import TriggoLogo from "../assets/styles/images/TriggoLogo.svg";
+import TriggoLogo from "../assets/images/TriggoLogo.svg";
 import { ThreeDots } from  'react-loader-spinner'; 
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -9,6 +9,7 @@ export default function Login() {
     const [clicked, setClicked] = useState(false); 
     const [email, setEmail] = useState(""); 
     const [password, setPassword] = useState(""); 
+    const [error, setError] = useState(true);
 
     const navigate = useNavigate(); 
     return( 
@@ -18,7 +19,7 @@ export default function Login() {
         </Logo> 
         
         <form>
-            <Data>
+            <Data error={error}>
             <input type="email" placeholder= "Email" value={email} onChange={(event) => setEmail(event.target.value)} required/>
             <input type="password" placeholder="Senha" value={password} onChange={(event) => setPassword(event.target.value)} required/>  
             <button onClick={() => setClicked(true)}>
@@ -29,12 +30,13 @@ export default function Login() {
             </Data> 
         </form> 
         
-        <Link to="/signUp"><Message>Primeira vez? Cadastre-se!</Message></Link> 
+        {error ? (
+        <ErrorMessage>
+            <h3>Informações Incorretas</h3>
+            <h4>X</h4>
+        </ErrorMessage> ) : "" }
 
-        <ErrorMessage> 
-            <ion-icon name="close-circle"></ion-icon>
-            <h3>Email ou senha inválidos</h3>
-        </ErrorMessage>
+        <Link to="/signUp"><Message>Primeira vez? Cadastre-se!</Message></Link> 
         </>
     )
 } 
@@ -56,6 +58,7 @@ const Data = styled.div`
     display: flex; 
     align-items: center; 
     flex-direction: column;  
+    margin-bottom: ${props => props.error ? "14px" : "32px" };
 
     input{  
         width: 326px;
@@ -94,9 +97,8 @@ const Message = styled.div`
     display: flex; 
     justify-content: center; 
     color: rgba(255, 255, 255, 1);
-    font-size: 20px; 
-    font-weight: 700;  
-    margin-top: 32px; 
+    font-size: 15px; 
+    font-weight: 700;   
     text-decoration: underline; 
     text-decoration-color: #F7BC58;
 
@@ -105,23 +107,25 @@ const Message = styled.div`
     }
 `
 const ErrorMessage = styled.div`
-    width: 250px; 
-    height: 40px; 
-    background-color: rgb(242, 125, 101); 
+    width: 326px; 
+    height: 58px;
+    background-color: #FF7474; 
     display: flex; 
     align-items: center;
-    justify-content: center;
-    border-radius: 5px;  
-    margin-top: 15px;
+    justify-content: space-between;
+    padding: 0px 20px 0px 20px;
+    border-radius: 5px;
+    margin-bottom: 20px; 
 
-    ion-icon { 
-        color: red; 
-        margin-right: 10px;
+    h4 { 
+        font-size: 14px; 
+        font-weight: 700;  
+        color: rgba(255, 255, 255, 1);
     } 
 
     h3 { 
         color: rgba(255, 255, 255, 1);
-        font-size: 16px; 
-        font-weight: 500;  
+        font-size: 14px; 
+        font-weight: 700;  
     }
 `
