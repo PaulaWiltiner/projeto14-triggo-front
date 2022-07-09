@@ -6,6 +6,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
+
 export default function Login() { 
     const [clicked, setClicked] = useState(false); 
     const [email, setEmail] = useState(""); 
@@ -36,7 +37,7 @@ export default function Login() {
             }, 1000);
         }); 
     } 
-
+    
     return( 
         <>
         <Logo>
@@ -156,5 +157,6 @@ const ErrorMessage = styled.div`
         color: rgba(255, 255, 255, 1);
         font-size: 14px; 
         font-weight: 700;  
+
     }
 `
