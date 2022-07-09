@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components"; 
-import triggoLogo from "../assets/styles/images/TriggoLogo.svg";
+import triggoLogo from "../assets/images/TriggoLogo.svg";
 
 export default function InitialScreen() {  
     const navigate = useNavigate(); 
 
     setTimeout(() => { 
-        console.log("Troca a tela");
+        navigate("/buy");
     }, 4000);
     
     return( 
