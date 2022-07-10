@@ -25,6 +25,10 @@ export default function BuySession() {
         }
     ]; 
 
+    function sendInfo() { 
+        
+    }
+
     return(
         <>
             <Tittle>
@@ -46,7 +50,7 @@ export default function BuySession() {
                 </ul>
             </Products> 
             
-            <form>
+            <form onSubmit={sendInfo}>
                 <Footer>
                     <input type="text" placeholder= "Endereço completo" value={address} onChange={(event) => setAddress(event.target.value)} required/>
                     <button onClick={() => setClicked(true)}>
