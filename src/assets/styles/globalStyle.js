@@ -13,7 +13,7 @@ const GlobalStyle = createGlobalStyle`
     display:flex;
     flex-direction:column;
     align-items:center;
-    margin:25px;
+    margin-top: 25px;
     font-family:  'Raleway', sans-serif;
   }
 
