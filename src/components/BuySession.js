@@ -139,43 +139,7 @@ const Footer = styled.div`
 
     }
   }
-`;
-const Footer = styled.div`
-  width: 100%;
-  height: 100%;
-  margin-top: 70px;
-
-  input {
-    width: 326px;
-    height: 58px;
-    display: flex;
-    align-items: center;
-    background-color: rgba(255, 255, 255, 1);
-    font-color: rgba(0, 0, 0, 1);
-    padding-left: 15px;
-    font-size: 20px;
-    margin-bottom: 14px;
-    border-radius: 5px;
-    border: none;
-  }
-  button {
-    width: 326px;
-    height: 46px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #f6a222;
-    color: rgba(255, 255, 255, 1);
-    font-size: 20px;
-    border-radius: 5px;
-    border: none;
-    font-weight: bold;
-    box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.15);
-    &:hover {
-      cursor: pointer;
-    }
-  }
-`;
+`
 const ErrorMessage = styled.div`
   width: 326px;
   height: 58px;

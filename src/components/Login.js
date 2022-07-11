@@ -28,7 +28,7 @@ export default function Login() {
     promise.then((response) => {
       console.log(response.data);
       setError(false);
-      navigate("/buy");
+      navigate("/mainscreen");
     });
 
     promise.catch((error) => {
