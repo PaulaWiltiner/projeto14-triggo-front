@@ -12,11 +12,14 @@ import { useState } from "react";
 
 export default function App() {
   const [productList, setProductList] = useState([]);
+  const [token, setToken] = useState("");
   return (
     <UserInfosContext.Provider
       value={{
         productList,
         setProductList,
+        token,
+        setToken,
       }}
     >
       <GlobalStyle />

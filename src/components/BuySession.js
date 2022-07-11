@@ -209,7 +209,7 @@ const Footer = styled.div`
     display: flex;
     align-items: center;
     background-color: rgba(255, 255, 255, 1);
-    font-color: rgba(0, 0, 0, 1);
+    color: rgba(0, 0, 0, 1);
     padding-left: 15px;
     font-size: 20px;
     margin-bottom: 14px;
