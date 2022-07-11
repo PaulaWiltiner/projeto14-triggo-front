@@ -66,7 +66,7 @@ export default function RenderBuySession ({name, price, amount, image, id}) {
                     <ion-icon name="add-circle" id="plus" onClick={() => contItens("plus",id)}></ion-icon>
                 </Counter> 
                 {counter !== 0 ? (
-                    <button id="refresh">Atualizar</button> ) : (
+                    "" ) : (
                     <button id="delete" onClick={() => removeProduct(id)}>Remover</button> )}
             </ProductData> 
         </OneProduct> 
