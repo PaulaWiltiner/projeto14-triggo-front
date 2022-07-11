@@ -7,11 +7,40 @@ export default function RenderBuySession ({name, price, amount, image, id}) {
     const { productList, setProductList } = useContext(UserInfosContext);
     let [counter, setCounter] = useState(amount); 
 
-    function contItens(event) {  
+    function contItens(event,id) {  
         if(event === "minus" && counter>0) { 
             setCounter(() => --counter); 
+                const list = [...productList];
+                const newList = list.map((item) => {
+                    if (item.id === id) {
+                    return {
+                        id: id,
+                        amount: -1 * (1 - item.amount),
+                        name: item.name,
+                        image: item.image,
+                        price: item.price,
+                    };
+                    }
+                    return item;
+                });
+                setProductList(() => newList);
+                console.log(productList);
         } else if(event === "plus") { 
             setCounter(() => ++counter); 
+            const list = [...productList];
+            const newList = list.map((item) => {
+            if (item.id === id) {
+                return {
+                    id: id,
+                    amount: 1 + item.amount ,
+                    name: item.name,
+                    image: item.image,
+                    price: item.price,
+                };
+           }
+          return item;
+        });
+        setProductList(() => newList);
         }
     } 
 
@@ -32,9 +61,9 @@ export default function RenderBuySession ({name, price, amount, image, id}) {
                 <h3>{name}</h3> 
                 <h4>R${(price * counter).toFixed(2).replace(".",",")}</h4>  
                 <Counter>
-                    <ion-icon name="remove-circle" id="minus" onClick={() => contItens("minus")}></ion-icon>
+                    <ion-icon name="remove-circle" id="minus" onClick={() => contItens("minus",id)}></ion-icon>
                     <span>{counter}</span> 
-                    <ion-icon name="add-circle" id="plus" onClick={() => contItens("plus")}></ion-icon>
+                    <ion-icon name="add-circle" id="plus" onClick={() => contItens("plus",id)}></ion-icon>
                 </Counter> 
                 {counter !== 0 ? (
                     <button id="refresh">Atualizar</button> ) : (

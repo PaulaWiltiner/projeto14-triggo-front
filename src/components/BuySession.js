@@ -34,7 +34,7 @@ export default function BuySession() {
   }, []);
 
   function sendInfo() { 
-    console.log(address)
+    console.log(address);
     if(address.length <= 1) { 
       setError(true);
     } else {  
