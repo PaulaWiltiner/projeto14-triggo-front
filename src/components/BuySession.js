@@ -12,38 +12,22 @@ export default function BuySession() {
   const [address, setAddress] = useState("");
   const [clicked, setClicked] = useState(false);
   const [error, setError] = useState(false);
-  const [list , setList] = useState([]);
-  const [teste, setTeste] = useState([]);
   const navigate = useNavigate();  
 
-  useEffect(()=> { 
-    const config = {
-      headers: {Authorization: `Bearer ${token}`}
-    };
-
-    const promise = axios.get("https://projeto14-triggo-back.herokuapp.com/buy",config); 
-
-    promise.then(response => { 
-      console.log(response.data);
-    }); 
-
-    promise.catch(err => { 
-      console.log(err);
-    });
-
-  }, []);
-
-  function sendInfo() { 
+  function sendInfo(event) { 
+    event.preventDefault();
     console.log(address);
+    const info = {address,productList};
     if(address.length <= 1) { 
       setError(true);
     } else {  
       const config = {
         headers: {Authorization: `Bearer ${token}`}
       };
-      const promise = axios.post("https://projeto14-triggo-back.herokuapp.com/finish",address,config); 
+      const promise = axios.post("https://projeto14-triggo-back.herokuapp.com/finish",info,config); 
 
       promise.then(response => { 
+        console.log(response.data);
         navigate("/buyfinish");
       }); 
 
