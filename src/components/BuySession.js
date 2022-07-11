@@ -5,18 +5,59 @@ import { useState, useEffect } from "react";
 import UserInfosContext from "../contexts/UserInfosContext";
 import { useContext } from "react";
 import RenderBuySession from "./RenderBuySession";
+import axios from "axios";
 
 export default function BuySession() { 
-  const { productList } = useContext(UserInfosContext);
-  console.log(productList);
+  const { productList, setProductList, token } = useContext(UserInfosContext);
   const [address, setAddress] = useState("");
   const [clicked, setClicked] = useState(false);
-  const [error, setError] = useState(true);
+  const [error, setError] = useState(false);
+  const [list , setList] = useState([]);
+  const [teste, setTeste] = useState([]);
   const navigate = useNavigate();  
 
+  useEffect(()=> { 
+    const config = {
+      headers: {Authorization: `Bearer ${token}`}
+    };
+
+    const promise = axios.get("https://projeto14-triggo-back.herokuapp.com/buy",config); 
+
+    promise.then(response => { 
+      console.log(response.data);
+    }); 
+
+    promise.catch(err => { 
+      console.log(err);
+    });
+
+  }, []);
+
   function sendInfo() { 
-        
+    if(address.length <= 1) { 
+      setError(true);
+    } else {  
+      const config = {
+        headers: {Authorization: `Bearer ${token}`}
+      };
+      const promise = axios.post("https://projeto14-triggo-back.herokuapp.com/finish",address,config); 
+
+      promise.then(response => { 
+        navigate("/buyfinish");
+      }); 
+
+      promise.catch(err => { 
+        console.log(err);
+      })
+    }
   }
+
+  function remove(id, name) { 
+    const list = [...productList];
+    console.log(list);
+    const find = list.filter(item => id !== item.id);
+    setProductList(find);
+}
 
 
   return (
@@ -39,6 +80,8 @@ export default function BuySession() {
                     price = {Number(product.price.replace(",","."))}  
                     amount = {product.amount} 
                     image = {product.image}
+                    id = {product.id} 
+                    remove = {remove}
               /> 
               )}
             </ul>
