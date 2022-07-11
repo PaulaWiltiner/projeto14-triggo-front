@@ -8,10 +8,8 @@ export default function RenderBuySession ({name, price, amount, image}) {
         console.log(event);
         if(event === "minus" && counter>0) { 
             setCounter(counter--); 
-            console.log("diminui");
         } else if(event === "plus") { 
             setCounter(counter++); 
-            console.log("aumentou");
         }
     }
 
@@ -21,7 +19,7 @@ export default function RenderBuySession ({name, price, amount, image}) {
             <BallCounter>{counter}</BallCounter>
             <ProductData>
                 <h3>{name}</h3> 
-                <h4>R${(price * counter).toFixed(2)}</h4>  
+                <h4>R${(price * counter).toFixed(2).replace(".",",")}</h4>  
                 <Counter>
                     <ion-icon name="remove-circle" id="minus" onClick={() => contItens("minus")}></ion-icon>
                     <span>{counter}</span> 

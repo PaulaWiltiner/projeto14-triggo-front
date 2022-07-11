@@ -2,33 +2,22 @@
 import styled from "styled-components"; 
 import { ThreeDots } from  'react-loader-spinner'; 
 import { useNavigate } from "react-router-dom";
-import { useState } from "react"; 
+import { useState, useEffect } from "react"; 
+import UserInfosContext from "../contexts/UserInfosContext";
+import { useContext } from "react";
 import RenderBuySession from "./RenderBuySession";
 
 export default function BuySession() { 
-    const [address, setAddress] = useState("");
-    const [clicked, setClicked] = useState(false);
-    const [error, setError] = useState(true);
-    const navigate = useNavigate();  
+  const { productList } = useContext(UserInfosContext);
+  console.log(productList);
+  const [address, setAddress] = useState("");
+  const [clicked, setClicked] = useState(false);
+  const [error, setError] = useState(true);
+  const navigate = useNavigate();  
 
-    const products = [ 
-        {
-            name: "pao de alho", 
-            price: 20, 
-            amount: 3, 
-            image: "https://www.sabornamesa.com.br/media/k2/items/cache/68fd1d661976b9d8b879f7809970f2e8_XL.jpg"
-        }, 
-        {
-            name: "pao de alho", 
-            price: 20, 
-            amount: 3, 
-            image: "https://www.sabornamesa.com.br/media/k2/items/cache/68fd1d661976b9d8b879f7809970f2e8_XL.jpg"
-        }
-    ]; 
-
-    function sendInfo() { 
+  function sendInfo() { 
         
-    }
+  }
 
   return (
     <>
@@ -44,10 +33,10 @@ export default function BuySession() {
 
             <Products>
                 <ul>
-                    {products.map(product => 
+                    {productList.map(product => 
                         <RenderBuySession 
                             name = {product.name}
-                            price = {product.price}  
+                            price = {Number(product.price.replace(",","."))}  
                             amount = {product.amount} 
                             image = {product.image}
                         /> 
