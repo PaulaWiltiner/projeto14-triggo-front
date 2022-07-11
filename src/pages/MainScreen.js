@@ -4,19 +4,26 @@ import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import TriggoTitle from "../assets/images/TriggoTitle.png";
 import UserInfosContext from "../contexts/UserInfosContext";
+import logout from "../data/logout";
 
 export default function MainScreen() {
-  const { productList } = useContext(UserInfosContext);
+  const { productList, token } = useContext(UserInfosContext);
   const navigate = useNavigate();
 
   return (
     <DivMain>
       <Header>
         <img src={TriggoTitle} alt="Triggo" />
-        <ion-icon onClick={() => navigate("/")} name="exit-outline"></ion-icon>
+        <ion-icon
+          onClick={() => {
+            navigate("/");
+            logout(token);
+          }}
+          name="exit-outline"
+        ></ion-icon>
       </Header>
       <Products />
-      <Footer>
+      <Foter>
         <ion-icon
           onClick={() => navigate("/")}
           name="document-text-outline"
@@ -29,7 +36,7 @@ export default function MainScreen() {
           ></ion-icon>
           <BallCounter>{productList.length}</BallCounter>
         </DivBasket>
-      </Footer>
+      </Foter>
     </DivMain>
   );
 }
@@ -71,7 +78,7 @@ const Header = styled.div`
   }
 `;
 
-const Footer = styled.div`
+const Foter = styled.div`
   width: 100%;
   height: 60px;
   position: fixed;

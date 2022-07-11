@@ -2,7 +2,8 @@ import styled from "styled-components";
 import TriggoLogo from "../assets/images/TriggoLogo.svg";
 import { ThreeDots } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import UserInfosContext from "../contexts/UserInfosContext";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import LoginContext from "../contexts/LoginContext";
@@ -12,7 +13,7 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
-
+  const { setToken } = useContext(UserInfosContext);
   const navigate = useNavigate();
 
   function sendInfo(event) {
@@ -26,6 +27,7 @@ export default function Login() {
     );
 
     promise.then((response) => {
+      setToken(response.data.token);
       console.log(response.data);
       setError(false);
       navigate("/mainscreen");
