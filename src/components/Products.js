@@ -1,75 +1,87 @@
 import styled from "styled-components";
-import TriggoLogo from "../assets/images/TriggoLogo.svg";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import UserInfosContext from "../contexts/UserInfosContext";
 import { useContext } from "react";
+import getProductList from "../data/getProductList";
 
 export default function Products() {
   const { productList, setProductList } = useContext(UserInfosContext);
-  const [colorButton, setColorButton] = useState("#f6a222");
-  const [swap, setSwap] = useState(true);
-  const [numCounter, setNumCounter] = useState(0);
+  const [products, setProducts] = useState([]);
+  useEffect(() => {
+    getProductList().then((list) => setProducts(list.response.data));
+  }, []);
 
-  function counter(command) {
-    if (command) {
-      if (numCounter >= 1) {
-        setNumCounter(numCounter - 1);
+  function counter(command, id, verif) {
+    if (verif === false) {
+      const prod = productList.filter((elem) => id === elem.id);
+      if (command) {
+        if (prod[0].amount > 1) {
+          const list = [...productList];
+          const newList = list.map((item) => {
+            if (item.id === id) {
+              return { id: id, amount: item.amount - 1 };
+            }
+            return item;
+          });
+          setProductList(newList);
+          console.log(productList);
+        }
+      } else {
+        const list = [...productList];
+        const newList = list.map((item) => {
+          if (item.id === id) {
+            return { id: id, amount: item.amount + 1 };
+          }
+          return item;
+        });
+        setProductList(newList);
       }
-    } else {
-      setNumCounter(1 + numCounter);
     }
   }
 
-  function changeButton() {
-    if (swap) {
-      setColorButton("#5FC25A");
-      setSwap(!swap);
-    } else {
-      setColorButton("#f6a222");
-      setSwap(!swap);
-    }
-  }
-
-  function addProduct(id) {
+  function addProduct(id, swap) {
     if (swap) {
       const list = [...productList];
-      list.push(id);
-      console.log(list);
+      list.push({ id: id, amount: 1 });
       setProductList(list);
     } else {
       const list = [...productList];
       list.splice(list.indexOf(id), 1);
-      console.log(list);
       setProductList(list);
     }
   }
 
-  function OneProduct() {
+  function OneProduct(props) {
     return (
       <Product>
-        <img src={TriggoLogo} alt="" />
+        <img src={props.infos.image} alt="" />
         <ProductData>
-          <h3>Pao de batata</h3>
-          <h4>R$ 14,90</h4>
+          <h3>{props.infos.name}</h3>
+          <h4>{props.infos.price}</h4>
+          <h4>{props.infos.description}</h4>
           <Counter>
             <ion-icon
-              onClick={() => counter(true)}
+              onClick={() => counter(true, props.infos._id, props.swap)}
               name="remove-circle"
               id="minus"
             ></ion-icon>
-            <span>{numCounter}</span>
+            <span>{props.amount}</span>
             <ion-icon
-              onClick={() => counter(false)}
+              onClick={() => counter(false, props.infos._id, props.swap)}
               name="add-circle"
               id="plus"
             ></ion-icon>
           </Counter>
         </ProductData>
         <Button
-          color={colorButton}
-          onClick={() => [changeButton(), addProduct("1")]}
+          color={props.colorButton}
+          onClick={() => addProduct(props.infos._id, props.swap)}
         >
-          {swap ? "Adicionar" : <ion-icon name="checkmark-outline"></ion-icon>}
+          {props.swap ? (
+            "Adicionar"
+          ) : (
+            <ion-icon name="checkmark-outline"></ion-icon>
+          )}
         </Button>
       </Product>
     );
@@ -79,16 +91,65 @@ export default function Products() {
       <Category>
         <Text>Pães</Text>
         <ProductList>
-          <OneProduct />
-          <OneProduct />
-          <OneProduct />
-          <OneProduct />
+          {products
+            ? products.map((item, index) => {
+                let color = "#f6a222";
+                let swap = true;
+                let amount = 0;
+                if (productList.some((elem) => elem.id === item._id)) {
+                  color = "#5FC25A";
+                  swap = false;
+                  const prod = productList.filter(
+                    (elem) => item._id === elem.id
+                  );
+                  amount = prod[0].amount;
+                }
+                if (item.category === "pães") {
+                  return (
+                    <OneProduct
+                      key={index}
+                      swap={swap}
+                      infos={item}
+                      colorButton={color}
+                      amount={amount}
+                    />
+                  );
+                }
+                return null;
+              })
+            : ""}
         </ProductList>
       </Category>
       <Category>
         <Text>Pizzas</Text>
         <ProductList>
-          <OneProduct />
+          {products
+            ? products.map((item, index) => {
+                let color = "#f6a222";
+                let swap = true;
+                let amount = 0;
+                if (productList.some((elem) => elem.id === item._id)) {
+                  color = "#5FC25A";
+                  swap = false;
+                  const prod = productList.filter(
+                    (elem) => item._id === elem.id
+                  );
+                  amount = prod[0].amount;
+                }
+                if (item.category === "pizzas") {
+                  return (
+                    <OneProduct
+                      key={index}
+                      swap={swap}
+                      infos={item}
+                      colorButton={color}
+                      amount={amount}
+                    />
+                  );
+                }
+                return null;
+              })
+            : ""}
         </ProductList>
       </Category>
     </DivProducts>
@@ -212,6 +273,10 @@ const Button = styled.button`
 
   border: 1px solid ${(props) => props.color};
   border-radius: 0px 0px 7px 7px;
+
+  ion-icon {
+    font-size: 24px;
+  }
 
   :hover {
     filter: brightness(1.1);

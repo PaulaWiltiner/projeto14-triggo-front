@@ -8,7 +8,7 @@ export default function BuyFinish() {
     <DivBuyFinish>
       <Text>Seu pedido foi realizado com sucesso ! </Text>
       <img src={Triggo} alt="" />
-      <Button onClick={() => navigate("/")}>OK</Button>
+      <Button onClick={() => navigate("/mainscreen")}>OK</Button>
     </DivBuyFinish>
   );
 }
@@ -25,25 +25,27 @@ const Text = styled.h1`
   color: #ffffff;
 `;
 
-const DivBuyFinish = styled.h1`
+const DivBuyFinish = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
   height: 100vh;
+  margin-top: -4em;
   justify-content: center;
   align-items: center;
 
   img {
-    margin-top: -8em;
-    margin-right: -6em;
-    object-fit: none;
+    width: 100%;
   }
 `;
 
 const Button = styled.button`
   width: 66px;
   height: 60px;
-  margin-top: 20px;
+  position: absolute;
+  bottom: 56px;
+  left: 42%;
+  z-index: 1;
 
   color: #f6a222;
   font-size: 21px;

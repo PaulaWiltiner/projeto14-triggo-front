@@ -8,6 +8,7 @@ import UserInfosContext from "../contexts/UserInfosContext";
 export default function MainScreen() {
   const { productList } = useContext(UserInfosContext);
   const navigate = useNavigate();
+
   return (
     <DivMain>
       <Header>
