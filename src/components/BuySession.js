@@ -34,6 +34,7 @@ export default function BuySession() {
   }, []);
 
   function sendInfo() { 
+    console.log(address);
     if(address.length <= 1) { 
       setError(true);
     } else {  
@@ -50,15 +51,7 @@ export default function BuySession() {
         console.log(err);
       })
     }
-  }
-
-  function remove(id, name) { 
-    const list = [...productList];
-    console.log(list);
-    const find = list.filter(item => id !== item.id);
-    setProductList(find);
-}
-
+  } 
 
   return (
     <>
@@ -80,8 +73,8 @@ export default function BuySession() {
                     price = {Number(product.price.replace(",","."))}  
                     amount = {product.amount} 
                     image = {product.image}
-                    id = {product.id} 
-                    remove = {remove}
+                    id = {product.id}  
+                    key = {product.id}
               /> 
               )}
             </ul>
@@ -194,4 +187,102 @@ const ErrorMessage = styled.div`
     font-size: 14px;
     font-weight: 700;
   }
-`;
+`; 
+const OneProduct = styled.li`
+    width: 347px; 
+    height: 145px; 
+    padding: 15px 0px;
+    display: flex;
+    justify-content: space-around; 
+    background-color: rgba(255, 255, 255, 1);
+    border-radius: 5px; 
+    box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.15); 
+    position: relative; 
+    margin-bottom: 20px;
+
+    img { 
+        width: 157px; 
+        height: 112px;
+    }
+`
+const BallCounter = styled.div` 
+    width: 24px; 
+    height: 24px; 
+    background-color: #F6A222; 
+    font-size: 16px;  
+    color: rgba(255, 255, 255, 1);  
+    border-radius: 50%;
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    position: absolute;
+    left: 160px;
+    bottom: 13px;
+`
+const ProductData = styled.div`
+    display: flex; 
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center; 
+    h3 { 
+        color: #F49C18; 
+        font-size: 16px; 
+        font-weight: bold;
+    } 
+    h4{
+        color: 000000; 
+        font-size: 16px; 
+        font-weight: bold;
+    } 
+    button#refresh{ 
+        width: 105px; 
+        height: 19px; 
+        background-color: #F6A222; 
+        color: rgba(255, 255, 255, 1); 
+        border-radius: 5px; 
+        border: none;
+        box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.15);
+        font-size: 10px;
+        font-weight: bold;
+        &:hover { 
+            cursor: pointer; 
+        }
+    } 
+    button#delete{ 
+        width: 105px; 
+        height: 19px; 
+        background-color: #FF5656; 
+        color: rgba(255, 255, 255, 1); 
+        border-radius: 5px; 
+        border: none;
+        box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.15);
+        font-size: 10px;
+        font-weight: bold;
+        &:hover { 
+            cursor: pointer; 
+        }
+    }
+`
+const Counter = styled.div`
+    display: flex; 
+    justify-content: space-between; 
+    ion-icon#minus { 
+        color: #FF5656;
+        width: 20px;
+        height: 20px; 
+        
+        &:hover{
+            cursor: pointer;
+        }
+    } 
+    
+    ion-icon#plus { 
+        color: rgb(26, 204, 38);
+        width: 20px;
+        height: 20px; 
+        
+        &:hover{
+            cursor: pointer;
+        }
+    }
+`
