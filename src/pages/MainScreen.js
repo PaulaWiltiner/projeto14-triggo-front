@@ -16,7 +16,7 @@ export default function MainScreen() {
         <ion-icon onClick={() => navigate("/")} name="exit-outline"></ion-icon>
       </Header>
       <Products />
-      <Footer>
+      <Foter>
         <ion-icon
           onClick={() => navigate("/")}
           name="document-text-outline"
@@ -29,7 +29,7 @@ export default function MainScreen() {
           ></ion-icon>
           <BallCounter>{productList.length}</BallCounter>
         </DivBasket>
-      </Footer>
+      </Foter>
     </DivMain>
   );
 }
@@ -71,7 +71,7 @@ const Header = styled.div`
   }
 `;
 
-const Footer = styled.div`
+const Foter = styled.div`
   width: 100%;
   height: 60px;
   position: fixed;
