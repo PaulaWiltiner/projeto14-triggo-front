@@ -1,8 +1,7 @@
 import styled from "styled-components";
-import { ThreeDots } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 import Order from "../components/MyOrders";
+import getUserProducts from "../data/getUserProducts";
 
 export default function Historic() {
   const navigate = useNavigate();

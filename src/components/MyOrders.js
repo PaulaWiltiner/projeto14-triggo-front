@@ -9,7 +9,7 @@ export default function MyOrders({ name, price, amount, image }) {
   return (
     <OneOrder>
       <OrderData>
-        <h3>Qui, 16 junho 2022</h3>
+        <h3>Pedido</h3>
         <ListData>
           <OneProduct>
             <Amount>2</Amount>
