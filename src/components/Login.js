@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import LoginContext from "../contexts/LoginContext";
 
 export default function Login() {
   const [clicked, setClicked] = useState(false);
@@ -27,7 +28,7 @@ export default function Login() {
     promise.then((response) => {
       console.log(response.data);
       setError(false);
-      navigate("/buy");
+      navigate("/mainscreen");
     });
 
     promise.catch((error) => {
