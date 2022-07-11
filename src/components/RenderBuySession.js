@@ -3,17 +3,26 @@ import styled from "styled-components";
 import UserInfosContext from "../contexts/UserInfosContext";
 import { useContext } from "react";
 
-export default function RenderBuySession ({name, price, amount, image, id, remove}) { 
+export default function RenderBuySession ({name, price, amount, image, id}) { 
     const { productList, setProductList } = useContext(UserInfosContext);
     let [counter, setCounter] = useState(amount); 
 
     function contItens(event) {  
         if(event === "minus" && counter>0) { 
-            setCounter(counter--); 
+            setCounter(() => --counter); 
         } else if(event === "plus") { 
-            setCounter(counter++); 
+            setCounter(() => ++counter); 
         }
     } 
+
+    function removeProduct(id) {
+        const list = [...productList];
+        console.log({id});
+        const found = list.find(element => element.id === id);
+        list.splice(list.indexOf(found), 1);
+        setProductList(list);
+        console.log({found}); 
+      } 
 
     return( 
         <OneProduct>
@@ -29,7 +38,7 @@ export default function RenderBuySession ({name, price, amount, image, id, remov
                 </Counter> 
                 {counter !== 0 ? (
                     <button id="refresh">Atualizar</button> ) : (
-                    <button id="delete" onClick={() => remove(id,name)}>Remover</button> )}
+                    <button id="delete" onClick={() => removeProduct(id)}>Remover</button> )}
             </ProductData> 
         </OneProduct> 
     )
