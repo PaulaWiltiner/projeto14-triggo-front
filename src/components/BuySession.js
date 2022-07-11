@@ -1,6 +1,5 @@
-
-import styled from "styled-components"; 
-import { ThreeDots } from  'react-loader-spinner'; 
+import styled from "styled-components";
+import { ThreeDots } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react"; 
 import UserInfosContext from "../contexts/UserInfosContext";
@@ -19,6 +18,7 @@ export default function BuySession() {
         
   }
 
+
   return (
     <>
       <Tittle>
@@ -30,19 +30,19 @@ export default function BuySession() {
         <h6>.</h6>
       </Tittle>
 
-
-            <Products>
-                <ul>
-                    {productList.map(product => 
-                        <RenderBuySession 
-                            name = {product.name}
-                            price = {Number(product.price.replace(",","."))}  
-                            amount = {product.amount} 
-                            image = {product.image}
-                        /> 
-                    )}
-                </ul>
-            </Products> 
+      
+      <Products>
+          <ul>
+            {productList.map(product => 
+                <RenderBuySession 
+                    name = {product.name}
+                    price = {Number(product.price.replace(",","."))}  
+                    amount = {product.amount} 
+                    image = {product.image}
+              /> 
+              )}
+            </ul>
+       </Products> 
             
             <form onSubmit={sendInfo}>
                 <Footer>
@@ -62,6 +62,7 @@ export default function BuySession() {
         </>
     )
 } 
+
 
 
 const Tittle = styled.div`
@@ -85,50 +86,47 @@ const Tittle = styled.div`
   }
 `;
 const Products = styled.div`
-
-   width: 100%; 
-   display: flex; 
-   justify-content: center; 
-   margin-top: 100px; 
-` 
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
+`;
 const Footer = styled.div`
-    width: 100%; 
-    height: 100%;
-    margin-top: 70px;
-    
-    input{  
-        width: 326px;
-        height: 58px; 
-        display: flex; 
-        align-items: center;
-        background-color: rgba(255, 255, 255, 1);
-        font-color: rgba(0, 0, 0, 1); 
-        padding-left: 15px; 
-        font-size: 20px; 
-        margin-bottom: 14px;  
-        border-radius: 5px;
-        border: none;
-    } 
-    button{ 
-        width: 326px; 
-        height: 46px; 
-        display: flex; 
-        justify-content: center; 
-        align-items: center;
-        background-color: #F6A222;
-        color: rgba(255, 255, 255, 1); 
-        font-size: 20px;
-        border-radius: 5px;
-        border: none;
-        font-weight: bold;
-        box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.15);
-        &:hover { 
-            cursor: pointer;
-        }
+  width: 100%;
+  height: 100%;
+  margin-top: 70px;
 
+  input {
+    width: 326px;
+    height: 58px;
+    display: flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 1);
+    color: rgba(0, 0, 0, 1);
+    padding-left: 15px;
+    font-size: 20px;
+    margin-bottom: 14px;
+    border-radius: 5px;
+    border: none;
+  }
+  button {
+    width: 326px;
+    height: 46px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f6a222;
+    color: rgba(255, 255, 255, 1);
+    font-size: 20px;
+    border-radius: 5px;
+    border: none;
+    font-weight: bold;
+    box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.15);
+    &:hover {
+      cursor: pointer;
     }
   }
-`
+`;
 const ErrorMessage = styled.div`
   width: 326px;
   height: 58px;
