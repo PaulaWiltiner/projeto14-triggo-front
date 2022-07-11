@@ -9,10 +9,14 @@ import axios from "axios";
 
 export default function MainScreen() {
   const { productList, token } = useContext(UserInfosContext);
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();  
+  console.log(token);
 
   function sendInfo() {  
-    const promise = axios.post("https://projeto14-triggo-back.herokuapp.com/bag",productList);
+    const config = { 
+      headers: {Authorization : `Bearer ${token}`}
+  }; 
+    const promise = axios.post("https://projeto14-triggo-back.herokuapp.com/bag",productList,config);
 
     promise.then(response => { 
       console.log(response.data); 

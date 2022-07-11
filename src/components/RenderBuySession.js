@@ -1,17 +1,57 @@
 import { useState } from "react";
 import styled from "styled-components"; 
+import UserInfosContext from "../contexts/UserInfosContext";
+import { useContext } from "react";
 
-export default function RenderBuySession ({name, price, amount, image}) { 
+export default function RenderBuySession ({name, price, amount, image, id}) { 
+    const { productList, setProductList } = useContext(UserInfosContext);
     let [counter, setCounter] = useState(amount); 
 
-    function contItens(event) {  
-        console.log(event);
+    function contItens(event,id) {  
         if(event === "minus" && counter>0) { 
-            setCounter(counter--); 
+            setCounter(() => --counter); 
+                const list = [...productList];
+                const newList = list.map((item) => {
+                    if (item.id === id) {
+                    return {
+                        id: id,
+                        amount: -1 * (1 - item.amount),
+                        name: item.name,
+                        image: item.image,
+                        price: item.price,
+                    };
+                    }
+                    return item;
+                });
+                setProductList(() => newList);
+                console.log(productList);
         } else if(event === "plus") { 
-            setCounter(counter++); 
+            setCounter(() => ++counter); 
+            const list = [...productList];
+            const newList = list.map((item) => {
+            if (item.id === id) {
+                return {
+                    id: id,
+                    amount: 1 + item.amount ,
+                    name: item.name,
+                    image: item.image,
+                    price: item.price,
+                };
+           }
+          return item;
+        });
+        setProductList(() => newList);
         }
-    }
+    } 
+
+    function removeProduct(id) {
+        const list = [...productList];
+        console.log({id});
+        const found = list.find(element => element.id === id);
+        list.splice(list.indexOf(found), 1);
+        setProductList(list);
+        console.log({found}); 
+      } 
 
     return( 
         <OneProduct>
@@ -21,13 +61,13 @@ export default function RenderBuySession ({name, price, amount, image}) {
                 <h3>{name}</h3> 
                 <h4>R${(price * counter).toFixed(2).replace(".",",")}</h4>  
                 <Counter>
-                    <ion-icon name="remove-circle" id="minus" onClick={() => contItens("minus")}></ion-icon>
+                    <ion-icon name="remove-circle" id="minus" onClick={() => contItens("minus",id)}></ion-icon>
                     <span>{counter}</span> 
-                    <ion-icon name="add-circle" id="plus" onClick={() => contItens("plus")}></ion-icon>
+                    <ion-icon name="add-circle" id="plus" onClick={() => contItens("plus",id)}></ion-icon>
                 </Counter> 
                 {counter !== 0 ? (
-                    <button id="refresh">Atualizar</button> ) : (
-                    <button id="delete">Remover</button> )}
+                    "" ) : (
+                    <button id="delete" onClick={() => removeProduct(id)}>Remover</button> )}
             </ProductData> 
         </OneProduct> 
     )
