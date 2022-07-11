@@ -4,16 +4,23 @@ import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import TriggoTitle from "../assets/images/TriggoTitle.png";
 import UserInfosContext from "../contexts/UserInfosContext";
+import logout from "../data/logout";
 
 export default function MainScreen() {
-  const { productList } = useContext(UserInfosContext);
+  const { productList, token } = useContext(UserInfosContext);
   const navigate = useNavigate();
 
   return (
     <DivMain>
       <Header>
         <img src={TriggoTitle} alt="Triggo" />
-        <ion-icon onClick={() => navigate("/")} name="exit-outline"></ion-icon>
+        <ion-icon
+          onClick={() => {
+            navigate("/");
+            logout(token);
+          }}
+          name="exit-outline"
+        ></ion-icon>
       </Header>
       <Products />
       <Foter>
