@@ -1,33 +1,23 @@
 import styled from "styled-components";
 import { ThreeDots } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react"; 
+import UserInfosContext from "../contexts/UserInfosContext";
+import { useContext } from "react";
 import RenderBuySession from "./RenderBuySession";
 
-export default function BuySession() {
+export default function BuySession() { 
+  const { productList } = useContext(UserInfosContext);
+  console.log(productList);
   const [address, setAddress] = useState("");
   const [clicked, setClicked] = useState(false);
   const [error, setError] = useState(true);
-  const navigate = useNavigate();
+  const navigate = useNavigate();  
 
-  const products = [
-    {
-      name: "pao de alho",
-      price: 20,
-      amount: 3,
-      image:
-        "https://www.sabornamesa.com.br/media/k2/items/cache/68fd1d661976b9d8b879f7809970f2e8_XL.jpg",
-    },
-    {
-      name: "pao de alho",
-      price: 20,
-      amount: 3,
-      image:
-        "https://www.sabornamesa.com.br/media/k2/items/cache/68fd1d661976b9d8b879f7809970f2e8_XL.jpg",
-    },
-  ];
+  function sendInfo() { 
+        
+  }
 
-  function sendInfo() {}
 
   return (
     <>
@@ -40,48 +30,40 @@ export default function BuySession() {
         <h6>.</h6>
       </Tittle>
 
+      
       <Products>
-        <ul>
-          {products.map((product) => (
-            <RenderBuySession
-              name={product.name}
-              price={product.price}
-              amount={product.amount}
-              image={product.image}
-            />
-          ))}
-        </ul>
-      </Products>
+          <ul>
+            {productList.map(product => 
+                <RenderBuySession 
+                    name = {product.name}
+                    price = {Number(product.price.replace(",","."))}  
+                    amount = {product.amount} 
+                    image = {product.image}
+              /> 
+              )}
+            </ul>
+       </Products> 
+            
+            <form onSubmit={sendInfo}>
+                <Footer>
+                    <input type="text" placeholder= "Endereço completo" value={address} onChange={(event) => setAddress(event.target.value)} required/>
+                    <button onClick={() => setClicked(true)}>
+                    {clicked ? (
+                        <ThreeDots color="white" height={80} width={80} /> 
+                    ) : ("Comprar") }
+                    </button>
+                </Footer>
+            </form> 
+            {error ? (
+            <ErrorMessage>
+                <h3>Informações Incorretas</h3>
+                <h4 onClick={() => setError(false)}>X</h4>
+            </ErrorMessage> ) : "" }
+        </>
+    )
+} 
 
-      <form onSubmit={sendInfo}>
-        <Footer>
-          <input
-            type="text"
-            placeholder="Endereço completo"
-            value={address}
-            onChange={(event) => setAddress(event.target.value)}
-            required
-          />
-          <button onClick={() => setClicked(true)}>
-            {clicked ? (
-              <ThreeDots color="white" height={80} width={80} />
-            ) : (
-              "Comprar"
-            )}
-          </button>
-        </Footer>
-      </form>
-      {error ? (
-        <ErrorMessage>
-          <h3>Informações Incorretas</h3>
-          <h4 onClick={() => setError(false)}>X</h4>
-        </ErrorMessage>
-      ) : (
-        ""
-      )}
-    </>
-  );
-}
+
 
 const Tittle = styled.div`
   width: 100%;

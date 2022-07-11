@@ -3,12 +3,26 @@ import Products from "../components/Products";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import TriggoTitle from "../assets/images/TriggoTitle.png";
-import UserInfosContext from "../contexts/UserInfosContext";
+import UserInfosContext from "../contexts/UserInfosContext"; 
 import logout from "../data/logout";
+import axios from "axios";
 
 export default function MainScreen() {
   const { productList, token } = useContext(UserInfosContext);
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
+
+  function sendInfo() {  
+    const promise = axios.post("https://projeto14-triggo-back.herokuapp.com/bag",productList);
+
+    promise.then(response => { 
+      console.log(response.data); 
+      navigate("/buy");
+    });  
+
+    promise.catch(error => { 
+      console.log(error); 
+    });
+  }
 
   return (
     <DivMain>
@@ -31,7 +45,7 @@ export default function MainScreen() {
 
         <DivBasket>
           <ion-icon
-            onClick={() => navigate("/buy")}
+            onClick={sendInfo}
             name="basket-outline"
           ></ion-icon>
           <BallCounter>{productList.length}</BallCounter>
@@ -42,7 +56,13 @@ export default function MainScreen() {
 }
 
 const DivBasket = styled.div`
-  position: relative;
+  position: relative; 
+
+  ion-icon { 
+    &:hover { 
+      cursor: pointer;
+    }
+  }
 `;
 
 const BallCounter = styled.div`
