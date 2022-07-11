@@ -104,7 +104,7 @@ export default function Products() {
                   );
                   amount = prod[0].amount;
                 }
-                if (item.category === "pães") {
+                if (item.category === "paes") {
                   return (
                     <OneProduct
                       key={index}
@@ -152,15 +152,47 @@ export default function Products() {
             : ""}
         </ProductList>
       </Category>
+      <Category>
+        <Text>Tortas</Text>
+        <ProductList>
+          {products
+            ? products.map((item, index) => {
+                let color = "#f6a222";
+                let swap = true;
+                let amount = 0;
+                if (productList.some((elem) => elem.id === item._id)) {
+                  color = "#5FC25A";
+                  swap = false;
+                  const prod = productList.filter(
+                    (elem) => item._id === elem.id
+                  );
+                  amount = prod[0].amount;
+                }
+                if (item.category === "tortas") {
+                  return (
+                    <OneProduct
+                      key={index}
+                      swap={swap}
+                      infos={item}
+                      colorButton={color}
+                      amount={amount}
+                    />
+                  );
+                }
+                return null;
+              })
+            : ""}
+        </ProductList>
+      </Category>
     </DivProducts>
   );
 }
 
 const DivProducts = styled.div`
   width: 100%;
-  height: 100%;
+  height: 200vh;
   margin-top: 15px;
-  padding-bottom: 80px;
+  padding-bottom: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -178,7 +210,7 @@ const Category = styled.div`
 const Product = styled.div`
   min-width: 200px;
   max-width: 200px;
-  height: 292px;
+  height: 280px;
   display: flex;
   margin-right: 8px;
   margin-left: 25px;
@@ -189,7 +221,8 @@ const Product = styled.div`
   box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.15);
   position: relative;
   img {
-    width: 100%;
+    width: 180px;
+    height: 120px;
   }
 `;
 
@@ -258,7 +291,7 @@ const Counter = styled.div`
 const Button = styled.button`
   width: 100%;
   position: absolute;
-  height: 36px;
+  height: 40px;
   bottom: 0px;
   left: 0px;
 
