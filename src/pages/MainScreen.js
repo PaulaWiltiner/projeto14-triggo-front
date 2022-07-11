@@ -32,6 +32,7 @@ export default function MainScreen() {
           onClick={() => {
             navigate("/");
             logout(token);
+            localStorage.clear();
           }}
           name="exit-outline"
         ></ion-icon>

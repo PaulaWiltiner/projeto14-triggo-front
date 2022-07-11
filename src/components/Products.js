@@ -71,7 +71,7 @@ export default function Products() {
         <img src={props.infos.image} alt="" />
         <ProductData>
           <h3>{props.infos.name}</h3>
-          <h4>{props.infos.price}</h4>
+          <h4>R$ {props.infos.price}</h4>
           <h4>{props.infos.description}</h4>
           <Counter>
             <ion-icon
