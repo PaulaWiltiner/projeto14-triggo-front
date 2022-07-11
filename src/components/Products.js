@@ -19,7 +19,13 @@ export default function Products() {
           const list = [...productList];
           const newList = list.map((item) => {
             if (item.id === id) {
-              return { id: id, amount: item.amount - 1 };
+              return {
+                id: id,
+                amount: item.amount - 1,
+                name: item.name,
+                image: item.image,
+                price: item.price,
+              };
             }
             return item;
           });
@@ -30,7 +36,13 @@ export default function Products() {
         const list = [...productList];
         const newList = list.map((item) => {
           if (item.id === id) {
-            return { id: id, amount: item.amount + 1 };
+            return {
+              id: id,
+              amount: item.amount + 1,
+              name: item.name,
+              image: item.image,
+              price: item.price,
+            };
           }
           return item;
         });
@@ -39,15 +51,17 @@ export default function Products() {
     }
   }
 
-  function addProduct(id, swap) {
+  function addProduct(id, swap, name, image, price) {
     if (swap) {
       const list = [...productList];
-      list.push({ id: id, amount: 1 });
+      list.push({ id: id, amount: 1, name: name, image: image, price: price });
       setProductList(list);
+      console.log(list);
     } else {
       const list = [...productList];
       list.splice(list.indexOf(id), 1);
       setProductList(list);
+      console.log(list);
     }
   }
 
@@ -75,7 +89,15 @@ export default function Products() {
         </ProductData>
         <Button
           color={props.colorButton}
-          onClick={() => addProduct(props.infos._id, props.swap)}
+          onClick={() =>
+            addProduct(
+              props.infos._id,
+              props.swap,
+              props.infos.name,
+              props.infos.image,
+              props.infos.price
+            )
+          }
         >
           {props.swap ? (
             "Adicionar"
