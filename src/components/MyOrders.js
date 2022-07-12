@@ -3,35 +3,32 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import UserInfosContext from "../contexts/UserInfosContext";
 
-export default function MyOrders({ name, price, amount, image }) {
+export default function MyOrders({ orderList }) {
   const navigate = useNavigate();
   const { setProductList } = useContext(UserInfosContext);
+  function sendBuy(list) {
+    setProductList(list);
+  }
+
   return (
     <OneOrder>
       <OrderData>
-        <h3>Qui, 16 junho 2022</h3>
+        <h3>{orderList[0]}</h3>
         <ListData>
-          <OneProduct>
-            <Amount>2</Amount>
-            <Text>{name}</Text>
-          </OneProduct>
-          <OneProduct>
-            <Amount>{amount}</Amount>
-            <Text>Pizza de Mussarela</Text>
-          </OneProduct>
-          <OneProduct>
-            <Amount>{amount}</Amount>
-            <Text>{name}</Text>
-          </OneProduct>
-          <OneProduct>
-            <Amount>{amount}</Amount>
-            <Text>Pizza de Mussarela</Text>
-          </OneProduct>
+          {orderList[1].map((item, index) => (
+            <OneProduct key={index}>
+              <Amount>{item.amount}</Amount>
+              <Text>{item.name}</Text>
+            </OneProduct>
+          ))}
         </ListData>
       </OrderData>
       <Button>
         <ion-icon
-          onClick={() => navigate("/buysession")}
+          onClick={() => {
+            navigate("/buy");
+            sendBuy(orderList[1]);
+          }}
           name="cart-outline"
         ></ion-icon>
       </Button>

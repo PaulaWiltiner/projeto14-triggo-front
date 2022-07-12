@@ -3,28 +3,32 @@ import Products from "../components/Products";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import TriggoTitle from "../assets/images/TriggoTitle.png";
-import UserInfosContext from "../contexts/UserInfosContext"; 
+import UserInfosContext from "../contexts/UserInfosContext";
 import logout from "../data/logout";
 import axios from "axios";
 
 export default function MainScreen() {
   const { productList, token } = useContext(UserInfosContext);
-  const navigate = useNavigate();  
+  const navigate = useNavigate();
   console.log(token);
 
-  function sendInfo() {  
-    const config = { 
-      headers: {Authorization : `Bearer ${token}`}
-  }; 
-    const promise = axios.post("https://projeto14-triggo-back.herokuapp.com/bag",productList,config);
+  function sendInfo() {
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    const promise = axios.post(
+      "https://projeto14-triggo-back.herokuapp.com/bag",
+      productList,
+      config
+    );
 
-    promise.then(response => { 
-      console.log(response.data); 
+    promise.then((response) => {
+      console.log(response.data);
       navigate("/buy");
-    });  
+    });
 
-    promise.catch(error => { 
-      console.log(error); 
+    promise.catch((error) => {
+      console.log(error);
     });
   }
 
@@ -44,15 +48,12 @@ export default function MainScreen() {
       <Products />
       <Foter>
         <ion-icon
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/historic")}
           name="document-text-outline"
         ></ion-icon>
 
         <DivBasket>
-          <ion-icon
-            onClick={sendInfo}
-            name="basket-outline"
-          ></ion-icon>
+          <ion-icon onClick={sendInfo} name="basket-outline"></ion-icon>
           <BallCounter>{productList.length}</BallCounter>
         </DivBasket>
       </Foter>
@@ -61,10 +62,10 @@ export default function MainScreen() {
 }
 
 const DivBasket = styled.div`
-  position: relative; 
+  position: relative;
 
-  ion-icon { 
-    &:hover { 
+  ion-icon {
+    &:hover {
       cursor: pointer;
     }
   }
