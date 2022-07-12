@@ -1,41 +1,46 @@
 import styled from "styled-components";
 import { ThreeDots } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react"; 
+import { useState, useEffect } from "react";
 import UserInfosContext from "../contexts/UserInfosContext";
 import { useContext } from "react";
 import RenderBuySession from "./RenderBuySession";
 import axios from "axios";
 
-export default function BuySession() { 
+export default function BuySession() {
   const { productList, setProductList, token } = useContext(UserInfosContext);
   const [address, setAddress] = useState("");
   const [clicked, setClicked] = useState(false);
   const [error, setError] = useState(false);
-  const navigate = useNavigate();  
+  const navigate = useNavigate();
 
-  function sendInfo(event) { 
+  function sendInfo(event) {
     event.preventDefault();
     console.log(address);
-    const info = {address,productList};
-    if(address.length <= 1) { 
+    const info = { address, productList };
+    if (address.length <= 1) {
       setError(true);
-    } else {  
+    } else {
       const config = {
-        headers: {Authorization: `Bearer ${token}`}
+        headers: { Authorization: `Bearer ${token}` },
       };
-      const promise = axios.post("https://projeto14-triggo-back.herokuapp.com/finish",info,config); 
+      const promise = axios.post(
+        "https://projeto14-triggo-back.herokuapp.com/finish",
+        info,
+        config
+      );
 
-      promise.then(response => { 
+      promise.then((response) => {
         console.log(response.data);
         navigate("/buyfinish");
-      }); 
+        setProductList([]);
+      });
 
-      promise.catch(err => { 
+      promise.catch((err) => {
         console.log(err);
-      })
+      });
     }
-  } 
+  }
 
   return (
     <>
@@ -48,45 +53,53 @@ export default function BuySession() {
         <h6>.</h6>
       </Tittle>
 
-      
       <Products>
-          <ul>
-            {productList.map(product => 
-                <RenderBuySession 
-                    name = {product.name}
-                    price = {Number(product.price.replace(",","."))}  
-                    amount = {product.amount} 
-                    image = {product.image}
-                    id = {product.id}  
-                    key = {product.id}
-              /> 
-              )}
-            </ul>
-       </Products> 
-            
-            <form onSubmit={sendInfo}>
-                <Footer>
-                    <input type="text" placeholder= "Endereço completo" value={address} onChange={(event) => setAddress(event.target.value)} required/>
-                    <button onClick={() => setClicked(true)}>
-                    {clicked ? (
-                        <ThreeDots color="white" height={80} width={80} /> 
-                    ) : ("Comprar") }
-                    </button>
-                </Footer>
-            </form> 
-            {error ? (
-            <ErrorMessage>
-                <h3>Informações Incorretas</h3>
-                <h4 onClick={() => setError(false)}>X</h4>
-            </ErrorMessage> ) : "" }
-        </>
-    )
-} 
+        <ul>
+          {productList.map((product) => (
+            <RenderBuySession
+              name={product.name}
+              price={Number(product.price.replace(",", "."))}
+              amount={product.amount}
+              image={product.image}
+              id={product.id}
+              key={product.id}
+            />
+          ))}
+        </ul>
+      </Products>
 
-
+      <form onSubmit={sendInfo}>
+        <Footer>
+          <input
+            type="text"
+            placeholder="Endereço completo"
+            value={address}
+            onChange={(event) => setAddress(event.target.value)}
+            required
+          />
+          <button onClick={() => setClicked(true)}>
+            {clicked ? (
+              <ThreeDots color="white" height={80} width={80} />
+            ) : (
+              "Comprar"
+            )}
+          </button>
+        </Footer>
+      </form>
+      {error ? (
+        <ErrorMessage>
+          <h3>Informações Incorretas</h3>
+          <h4 onClick={() => setError(false)}>X</h4>
+        </ErrorMessage>
+      ) : (
+        ""
+      )}
+    </>
+  );
+}
 
 const Tittle = styled.div`
-  width: 100%;
+  width: 360px;
   height: 100%;
   display: flex;
   justify-content: space-between;
@@ -171,102 +184,102 @@ const ErrorMessage = styled.div`
     font-size: 14px;
     font-weight: 700;
   }
-`; 
+`;
 const OneProduct = styled.li`
-    width: 347px; 
-    height: 145px; 
-    padding: 15px 0px;
-    display: flex;
-    justify-content: space-around; 
-    background-color: rgba(255, 255, 255, 1);
-    border-radius: 5px; 
-    box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.15); 
-    position: relative; 
-    margin-bottom: 20px;
+  width: 347px;
+  height: 145px;
+  padding: 15px 0px;
+  display: flex;
+  justify-content: space-around;
+  background-color: rgba(255, 255, 255, 1);
+  border-radius: 5px;
+  box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.15);
+  position: relative;
+  margin-bottom: 20px;
 
-    img { 
-        width: 157px; 
-        height: 112px;
-    }
-`
-const BallCounter = styled.div` 
-    width: 24px; 
-    height: 24px; 
-    background-color: #F6A222; 
-    font-size: 16px;  
-    color: rgba(255, 255, 255, 1);  
-    border-radius: 50%;
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    position: absolute;
-    left: 160px;
-    bottom: 13px;
-`
+  img {
+    width: 157px;
+    height: 112px;
+  }
+`;
+const BallCounter = styled.div`
+  width: 24px;
+  height: 24px;
+  background-color: #f6a222;
+  font-size: 16px;
+  color: rgba(255, 255, 255, 1);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  left: 160px;
+  bottom: 13px;
+`;
 const ProductData = styled.div`
-    display: flex; 
-    flex-direction: column;
-    justify-content: space-between;
-    text-align: center; 
-    h3 { 
-        color: #F49C18; 
-        font-size: 16px; 
-        font-weight: bold;
-    } 
-    h4{
-        color: 000000; 
-        font-size: 16px; 
-        font-weight: bold;
-    } 
-    button#refresh{ 
-        width: 105px; 
-        height: 19px; 
-        background-color: #F6A222; 
-        color: rgba(255, 255, 255, 1); 
-        border-radius: 5px; 
-        border: none;
-        box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.15);
-        font-size: 10px;
-        font-weight: bold;
-        &:hover { 
-            cursor: pointer; 
-        }
-    } 
-    button#delete{ 
-        width: 105px; 
-        height: 19px; 
-        background-color: #FF5656; 
-        color: rgba(255, 255, 255, 1); 
-        border-radius: 5px; 
-        border: none;
-        box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.15);
-        font-size: 10px;
-        font-weight: bold;
-        &:hover { 
-            cursor: pointer; 
-        }
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  h3 {
+    color: #f49c18;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  h4 {
+    color: 000000;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  button#refresh {
+    width: 105px;
+    height: 19px;
+    background-color: #f6a222;
+    color: rgba(255, 255, 255, 1);
+    border-radius: 5px;
+    border: none;
+    box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.15);
+    font-size: 10px;
+    font-weight: bold;
+    &:hover {
+      cursor: pointer;
     }
-`
+  }
+  button#delete {
+    width: 105px;
+    height: 19px;
+    background-color: #ff5656;
+    color: rgba(255, 255, 255, 1);
+    border-radius: 5px;
+    border: none;
+    box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.15);
+    font-size: 10px;
+    font-weight: bold;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+`;
 const Counter = styled.div`
-    display: flex; 
-    justify-content: space-between; 
-    ion-icon#minus { 
-        color: #FF5656;
-        width: 20px;
-        height: 20px; 
-        
-        &:hover{
-            cursor: pointer;
-        }
-    } 
-    
-    ion-icon#plus { 
-        color: rgb(26, 204, 38);
-        width: 20px;
-        height: 20px; 
-        
-        &:hover{
-            cursor: pointer;
-        }
+  display: flex;
+  justify-content: space-between;
+  ion-icon#minus {
+    color: #ff5656;
+    width: 20px;
+    height: 20px;
+
+    &:hover {
+      cursor: pointer;
     }
-`
+  }
+
+  ion-icon#plus {
+    color: rgb(26, 204, 38);
+    width: 20px;
+    height: 20px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+`;

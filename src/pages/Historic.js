@@ -1,27 +1,22 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import Order from "../components/MyOrders";
+import { useState, useEffect } from "react";
 import getUserProducts from "../data/getUserProducts";
+import UserInfosContext from "../contexts/UserInfosContext";
+import { useContext } from "react";
 
 export default function Historic() {
   const navigate = useNavigate();
+  const [orderList, setOrderList] = useState([]);
+  const { token } = useContext(UserInfosContext);
 
-  const products = [
-    {
-      name: "pao de alho",
-      price: 20,
-      amount: 3,
-      image:
-        "https://www.sabornamesa.com.br/media/k2/items/cache/68fd1d661976b9d8b879f7809970f2e8_XL.jpg",
-    },
-    {
-      name: "pao de alho",
-      price: 20,
-      amount: 3,
-      image:
-        "https://www.sabornamesa.com.br/media/k2/items/cache/68fd1d661976b9d8b879f7809970f2e8_XL.jpg",
-    },
-  ];
+  useEffect(() => {
+    getUserProducts(token).then((list) => {
+      console.log(list.response.data);
+      setOrderList(list.response.data[0].historic);
+    });
+  }, []);
 
   return (
     <>
@@ -36,14 +31,9 @@ export default function Historic() {
 
       <Products>
         <ul>
-          {products.map((product) => (
-            <Order
-              name={product.name}
-              price={product.price}
-              amount={product.amount}
-              image={product.image}
-            />
-          ))}
+          {orderList.length !== 0
+            ? orderList.map((product) => <Order orderList={product} />)
+            : null}
         </ul>
       </Products>
     </>
